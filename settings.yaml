@@ -1,0 +1,9 @@
+fields:
+  oauth_token:
+    type: text
+
+  cache_results:
+    type: toggle
+
+  cache_length:
+     type: text
