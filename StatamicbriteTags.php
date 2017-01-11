@@ -106,12 +106,12 @@ class StatamicbriteTags extends Tags
 
 
 
-        // load search results from the cache (this won't know if parameters have changed, it expects parameters to always be the same)
+        // load search results from the cache (this won't know if search parameters have changed, it expects parameters to always be the same)
         if( $this->cache_results && $this->cache->exists( 'sb_search_results' ) ) {
 
             $search_results = $this->cache->get( 'sb_search_results' );
 
-        // if this has not been cached, so ask Eventbrite for the results, and cache them for a minute
+        // if this has not been cached, ask Eventbrite for the results, and cache them
         } else {
 
             try {
@@ -126,7 +126,9 @@ class StatamicbriteTags extends Tags
 
             }
 
-            $this->cache->put( 'sb_search_results', $search_results, $this->cache_length );
+            if( $this->cache_results ) {
+                $this->cache->put( 'sb_search_results', $search_results, $this->cache_length );
+	         }
 
         }
 
@@ -218,7 +220,7 @@ class StatamicbriteTags extends Tags
 
             $venue = $this->cache->get( 'sb_venue_'.$venue_id );
 
-        // if this has not been cached, so ask Eventbrite for the results, and cache them for a minute
+        // if this has not been cached, ask Eventbrite for the results, and cache them
         } else {
 
             try {
@@ -233,7 +235,9 @@ class StatamicbriteTags extends Tags
 
             }
 
-            $this->cache->put( 'sb_venue_'.$venue_id, $venue, $this->cache_length );
+            if( $this->cache_results ) {
+                $this->cache->put( 'sb_venue_'.$venue_id, $venue, $this->cache_length );
+            }
 
         }
 
@@ -286,7 +290,7 @@ class StatamicbriteTags extends Tags
 
             $ticket_classes = $this->cache->get( 'sb_ticket_classes_'.$event_id );
 
-        // if this has not been cached, so ask Eventbrite for the results, and cache them for a minute
+        // if this has not been cached, ask Eventbrite for the results, and cache them
         } else {
 
             try {
@@ -301,8 +305,9 @@ class StatamicbriteTags extends Tags
 
             }
 
-            $this->cache->put( 'sb_ticket_classes_'.$event_id, $ticket_classes, $this->cache_length );
-
+            if( $this->cache_results ) {
+                $this->cache->put( 'sb_ticket_classes_'.$event_id, $ticket_classes, $this->cache_length );
+            }
         }
 
 
